@@ -1,9 +1,9 @@
 .footer {
     background-color: $darkGrey;
-    padding: $gap / 2 0;
+    padding: calc($gap / 2) 0;
 
     &-content {
-        padding-top: $gap / 2;
+        padding-top: calc($gap / 2);
     }
 
     .copyright {

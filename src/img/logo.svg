@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 328 54" style="enable-background:new 0 0 328 54;" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+<svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 227 54" style="enable-background:new 0 0 328 54;" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
     <style bx:fonts="Lato">@import url(https://fonts.googleapis.com/css2?family=Lato%3Aital%2Cwght%400%2C100%3B0%2C300%3B0%2C400%3B0%2C700%3B0%2C900%3B1%2C100%3B1%2C300%3B1%2C400%3B1%2C700%3B1%2C900&amp;display=swap);</style>
   </defs>
@@ -7,5 +7,5 @@
 	.st0{enable-background:new    ;}
 	.st1{fill:#FFFFFF;}
 </style>
-  <text style="fill: rgb(255, 255, 255); font-family: Lato; font-size: 6.43579px; white-space: pre;" transform="matrix(5.199535, 0, 0, 5.438339, -198.957382, -104.62413)"><tspan x="48.545" y="26.364">the </tspan><tspan style="word-spacing: -0.5px;">REAL </tspan><tspan style="letter-spacing: -0.3px; word-spacing: -0.5px;">STATE</tspan></text>
+  <text style="fill: rgb(255, 255, 255); font-family: Lato; font-size: 6.43579px; white-space: pre;" transform="matrix(5.199535, 0, 0, 5.438339, -252.957382, -105.533218)"><tspan x="48.545" y="26.364">the </tspan><tspan style="word-spacing: -0.5px;">REAL </tspan><tspan style="letter-spacing: -0.3px; word-spacing: -0.5px;">STATE</tspan></text>
 </svg>

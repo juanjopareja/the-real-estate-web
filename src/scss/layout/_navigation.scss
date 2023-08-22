@@ -7,6 +7,15 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    img {
+        width: 70%;
+        margin: 0 auto;
+
+        @include tablet { 
+            width: 100%;
+        }
+    }
 }
 
 .navigation {
