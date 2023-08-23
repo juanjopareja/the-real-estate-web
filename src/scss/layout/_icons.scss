@@ -1,0 +1,17 @@
+.icon {
+    text-align: center;
+
+    img {
+        height: 10rem;
+    }
+
+    h3{
+        text-transform: uppercase;
+    }
+}
+
+.icons-about {
+    @include tablet { 
+        @include grid(3, 2rem);
+    }
+}
