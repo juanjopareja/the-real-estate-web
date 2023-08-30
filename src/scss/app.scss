@@ -5,8 +5,7 @@
 @import 'base/utilities';
 @import 'base/buttons';
 
-
-//** UI **/
+/** UI **/
 @import 'layout/header';
 @import 'layout/footer';
 @import 'layout/navigation';
@@ -15,3 +14,6 @@
 @import 'layout/contact';
 @import 'layout/lower';
 @import 'layout/comments';
+
+/** Internals **/
+@import 'internal/about';
