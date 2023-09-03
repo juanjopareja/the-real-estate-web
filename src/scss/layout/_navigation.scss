@@ -21,10 +21,13 @@
 
 .navigation {
     visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s linear;
 
     @include tablet { 
         display: flex;
         align-items: center;
+        opacity: 1;
         visibility: visible;
     }
 
@@ -60,4 +63,5 @@
 
 .show {
     visibility: visible;
+    opacity: 1;
 }
