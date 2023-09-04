@@ -9,7 +9,8 @@
         color: $grey;
     }
 
-    .advertisement {
+    .advertisement,
+    .property-summary {
         background-color: $darkGrey;
         border: 1px solid $darkGrey;
 
@@ -19,6 +20,24 @@
 
         .icon {
             filter: invert(100);
+        }
+    }
+    
+    .about-text blockquote {
+        color: $white;
+    }
+
+    .form {
+        label, legend,
+        p {
+            color: $grey;
+        }
+
+        input:not([type="submit"]),
+        textarea, select {
+            background-color: $darkGrey;
+            border: 1px solid $darkGrey;
+            color: $white;
         }
     }
 }

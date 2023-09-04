@@ -48,6 +48,7 @@
 .navigation {
     visibility: hidden;
     opacity: 0;
+    height: 0;
     transition: opacity 0.5s linear;
 
     @include tablet { 
@@ -94,4 +95,5 @@
 .show {
     visibility: visible;
     opacity: 1;
+    height: auto;
 }
