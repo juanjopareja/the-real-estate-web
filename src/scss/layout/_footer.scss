@@ -7,6 +7,11 @@
         padding-top: calc($gap / 2);
     }
 
+    .navigation {
+        visibility: visible;
+        opacity: 1;
+    }
+
     .copyright {
         color: $white;
         text-align: center;

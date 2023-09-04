@@ -1,0 +1,24 @@
+.dark-mode {
+    background-color: darken($darkGrey, 10);
+
+    p {
+        color: $white;
+    }
+
+    a, h1, h2, h3, h4 {
+        color: $grey;
+    }
+
+    .advertisement {
+        background-color: $darkGrey;
+        border: 1px solid $darkGrey;
+
+        .price {
+            color: $green;
+        }
+
+        .icon {
+            filter: invert(100);
+        }
+    }
+}
