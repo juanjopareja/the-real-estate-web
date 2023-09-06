@@ -1,39 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Real Estate</title>
-    <link rel="stylesheet" href="build/css/app.css">
-</head>
-<body>
-    <header class="header start">
-        <div class="container header-content">
-            <div class="bar">
-                <a href="/">
-                    <img src="build/img/logo.svg" alt="imagen logo">
-                </a>
-
-                <div class="mobile-menu">
-                    <img src="build/img/bars.svg" alt="icono menú responsive">
-                </div>
-
-                <div class="right-side">
-                    <img class="dark-mode-button" src="build/img/dark-mode.svg" alt="dark mode">
-
-                    <nav class="navigation">
-                        <a href="about.html">Nosotros</a>
-                        <a href="advertisements.html">Anuncios</a>
-                        <a href="blog.html">Blog</a>
-                        <a href="contact.html">Contacto</a>
-                    </nav>
-                </div>
-
-            </div><!-- .bar -->
-
-            <h1>Venta de Casas y Apartamentos exclusivos de lujo</h1>
-        </div>
-    </header>
+<?php
+    $start = true;
+    include './includes/templates/header.php';
+?>
 
     <main class="container section">
         <h1>Más sobre Nosotros</h1>
