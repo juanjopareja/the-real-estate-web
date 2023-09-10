@@ -1,6 +1,6 @@
 <?php
-    $start = false;
-    include './includes/templates/header.php';
+    require 'includes/functions.php';
+    includeTemplate('header');
 ?>
 
     <main class="container section center-content">
@@ -40,5 +40,5 @@
     </main>
 
 <?php
-    include './includes/templates/footer.php';
+    includeTemplate('footer');
 ?>

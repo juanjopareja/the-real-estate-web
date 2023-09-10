@@ -1,6 +1,6 @@
 <?php
-    $start = false;
-    include './includes/templates/header.php';
+    require 'includes/functions.php';
+    includeTemplate('header');
 ?>
 
     <main class="container section">
@@ -52,5 +52,5 @@
     </section>
 
 <?php
-    include './includes/templates/footer.php';
+    includeTemplate('footer');
 ?>
