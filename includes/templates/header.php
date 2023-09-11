@@ -11,15 +11,15 @@
         <div class="container header-content">
             <div class="bar">
                 <a href="/the-real-estate-web/index.php">
-                    <img src="build/img/logo.svg" alt="imagen logo">
+                    <img src="/the-real-estate-web/build/img/logo.svg" alt="imagen logo">
                 </a>
 
                 <div class="mobile-menu">
-                    <img src="build/img/bars.svg" alt="icono menú responsive">
+                    <img src="/the-real-estate-web/build/img/bars.svg" alt="icono menú responsive">
                 </div>
 
                 <div class="right-side">
-                    <img class="dark-mode-button" src="build/img/dark-mode.svg" alt="dark mode">
+                    <img class="dark-mode-button" src="/the-real-estate-web/build/img/dark-mode.svg" alt="dark mode">
 
                     <nav class="navigation">
                         <a href="about.php">Nosotros</a>
