@@ -1,4 +1,8 @@
 <?php
+    // DataBase
+    require '../../includes/config/database.php';
+    $db = connectDB();
+
     require '../../includes/functions.php';
     includeTemplate('header');
 ?>
