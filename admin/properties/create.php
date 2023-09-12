@@ -3,6 +3,26 @@
     require '../../includes/config/database.php';
     $db = connectDB();
 
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $title = $_POST['title'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+        $bedrooms = $_POST['bedrooms'];
+        $wc = $_POST['wc'];
+        $parking = $_POST['parking'];
+        $seller = $_POST['seller'];
+
+        // DB Insert
+        $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, sellers_id)
+        VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$seller')";
+
+        $result = mysqli_query($db, $query);
+
+        if($result) {
+            echo "Insertado correctamente";
+        }
+    }   
+
     require '../../includes/functions.php';
     includeTemplate('header');
 ?>
@@ -12,42 +32,42 @@
 
         <a href="../index.php" class="button green-button">Volver</a>
 
-        <form class="form">
+        <form class="form" method="POST" action="../properties/create.php">
             <fieldset>
                 <legend>Información General</legend>
 
                 <label for="title">Título:</label>
-                <input type="text" id="title" placeholder="Título Propiedad">
+                <input type="text" id="title" name="title" placeholder="Título Propiedad">
 
                 <label for="price">Precio:</label>
-                <input type="number" id="price" placeholder="Precio Propiedad">
+                <input type="number" id="price" name="price" placeholder="Precio Propiedad">
 
                 <label for="image">Imagen:</label>
                 <input type="file" id="image" accept="image/jpeg, image/png">
 
                 <label for="description">Descripción:</label>
-                <textarea id="description"></textarea>
+                <textarea id="description" name="description"></textarea>
             </fieldset>
 
             <fieldset>
                 <legend>Información Propiedad</legend>
 
                 <label for="bedrooms">Habitaciones:</label>
-                <input type="number" id="bedrooms" placeholder="Ej: 3" min="1" max="9">
+                <input type="number" id="bedrooms" name="bedrooms" placeholder="Ej: 3" min="1" max="9">
 
-                <label for="bathrooms">Baños:</label>
-                <input type="number" id="bathrooms" placeholder="Ej: 2" min="1" max="9">
+                <label for="wc">Baños:</label>
+                <input type="number" id="wc" name="wc" placeholder="Ej: 2" min="1" max="9">
 
                 <label for="parking">Parking:</label>
-                <input type="number" id="parking" placeholder="Ej: 1" min="1" max="9">
+                <input type="number" id="parking" name="parking" placeholder="Ej: 1" min="1" max="9">
             </fieldset>
 
             <fieldset>
                 <legend>Vendedor</legend>
 
-                <select>
-                    <option value="1">Juanjo</option>
-                    <option value="2">Sara</option>
+                <select name="seller">
+                    <option value="1">Juanjo Pareja</option>
+                    <option value="2">Sara Ponce</option>
                 </select>
             </fieldset>
 
