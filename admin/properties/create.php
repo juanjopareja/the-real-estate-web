@@ -3,6 +3,9 @@
     require '../../includes/config/database.php';
     $db = connectDB();
 
+    // Error Messages
+    $errors = [];
+
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];
         $price = $_POST['price'];
@@ -12,15 +15,46 @@
         $parking = $_POST['parking'];
         $seller = $_POST['seller'];
 
-        // DB Insert
-        $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, sellers_id)
-        VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$seller')";
-
-        $result = mysqli_query($db, $query);
-
-        if($result) {
-            echo "Insertado correctamente";
+        if(!$title) {
+            $errors[] = "Debes añadir un título";
         }
+
+        if(!$price) {
+            $errors[] = "Debes añadir un precio";
+        }
+
+        if(strlen($description) < 50){
+            $errors[] = "La descripción es obligatoria y debe tener al menos 50 caracteres";
+        }
+
+        if(!$bedrooms) {
+            $errors[] = "El número de habitaciones es obligatorio";
+        }
+
+        if(!$wc) {
+            $errors[] = "El número de baños es obligatorio";
+        }
+
+        if(!$parking) {
+            $errors[] = "El número de plazas de garage es obligatorio";
+        }
+
+        if(!$seller) {
+            $errors[] = "Elige un vendedor";
+        }
+
+        if(empty($errors)) {
+            // DB Insert
+            $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, sellers_id)
+            VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$seller')";
+    
+            $result = mysqli_query($db, $query);
+    
+            if($result) {
+                echo "Insertado correctamente";
+            }
+        }
+
     }   
 
     require '../../includes/functions.php';
@@ -31,6 +65,14 @@
         <h1>Crear</h1>
 
         <a href="../index.php" class="button green-button">Volver</a>
+
+        <?php foreach($errors as $error) { ?>
+
+        <div class="alert error">
+            <?php echo $error; ?>
+        </div>
+
+        <?php } ?>
 
         <form class="form" method="POST" action="../properties/create.php">
             <fieldset>
@@ -66,6 +108,7 @@
                 <legend>Vendedor</legend>
 
                 <select name="seller">
+                    <option value="">-- Selecciona --</option>
                     <option value="1">Juanjo Pareja</option>
                     <option value="2">Sara Ponce</option>
                 </select>
