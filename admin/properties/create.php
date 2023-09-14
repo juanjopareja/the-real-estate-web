@@ -3,6 +3,10 @@
     require '../../includes/config/database.php';
     $db = connectDB();
 
+    // Sellers query
+    $query_seller = "SELECT * FROM sellers";
+    $result_seller = mysqli_query($db, $query_seller);
+
     // Error Messages
     $errors = [];
 
@@ -12,7 +16,8 @@
     $bedrooms = '';
     $wc = '';
     $parking = '';
-    $seller = '';
+    $seller_id = '';
+    $created = date('Y/m/d');
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];
@@ -21,7 +26,7 @@
         $bedrooms = $_POST['bedrooms'];
         $wc = $_POST['wc'];
         $parking = $_POST['parking'];
-        $seller = $_POST['seller'];
+        $seller_id = $_POST['seller'];
 
         if(!$title) {
             $errors[] = "Debes añadir un título";
@@ -47,19 +52,20 @@
             $errors[] = "El número de plazas de garage es obligatorio";
         }
 
-        if(!$seller) {
+        if(!$seller_id) {
             $errors[] = "Elige un vendedor";
         }
 
         if(empty($errors)) {
             // DB Insert
-            $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, sellers_id)
-            VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$seller')";
+            $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, created, sellers_id)
+            VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
     
             $result = mysqli_query($db, $query);
     
             if($result) {
-                echo "Insertado correctamente";
+                // Redirect User
+                header('Location: ../index.php');
             }
         }
 
@@ -117,8 +123,10 @@
 
                 <select name="seller">
                     <option value="">-- Selecciona --</option>
-                    <option value="1">Juanjo Pareja</option>
-                    <option value="2">Sara Ponce</option>
+                    <?php while($seller = mysqli_fetch_assoc($result_seller)) {?>
+                        <option <?php echo $seller_id === $seller['id'] ? 'selected' : ''; ?> value="<?php echo $seller['id']; ?>"> <?php echo $seller['name'] . " " . $seller['lastname']; ?></option>
+                    <?php } ?>
+                    
                 </select>
             </fieldset>
 
