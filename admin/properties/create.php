@@ -28,6 +28,10 @@
         $seller_id = mysqli_real_escape_string($db, $_POST['seller']);
         $created = date('Y/m/d');
 
+        // Asign files to a variable
+        $image = $_FILES['image'];
+
+
         if(!$title) {
             $errors[] = "Debes añadir un título";
         }
@@ -54,6 +58,17 @@
 
         if(!$seller_id) {
             $errors[] = "Elige un vendedor";
+        }
+
+        if(!$image['name'] || $image['error']) {
+            $errors[] = "La imagen es obligatoria";
+        }
+
+        // Validate image size (100kb max)
+        $size = 1000 * 100;
+
+        if($image['size'] > $size) {
+            $errors[] = "La imagen supera el tamaño máximo de archivo (100kb)";
         }
 
         if(empty($errors)) {
@@ -88,7 +103,7 @@
 
         <?php } ?>
 
-        <form class="form" method="POST" action="../properties/create.php">
+        <form class="form" method="POST" action="../properties/create.php" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información General</legend>
 
@@ -99,7 +114,7 @@
                 <input type="number" id="price" name="price" placeholder="Precio Propiedad" value="<?php echo $price; ?>">
 
                 <label for="image">Imagen:</label>
-                <input type="file" id="image" accept="image/jpeg, image/png">
+                <input type="file" id="image" name="image" accept="image/jpeg, image/png">
 
                 <label for="description">Descripción:</label>
                 <textarea id="description" name="description"><?php echo $description; ?></textarea>
