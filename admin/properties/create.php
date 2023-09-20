@@ -64,14 +64,25 @@
             $errors[] = "La imagen es obligatoria";
         }
 
-        // Validate image size (100kb max)
-        $size = 1000 * 100;
+        // Validate image size (1Mb max)
+        $size = 1000 * 1000;
 
         if($image['size'] > $size) {
             $errors[] = "La imagen supera el tamaño máximo de archivo (100kb)";
         }
 
         if(empty($errors)) {
+            // Files Upload
+            // Create Folder
+            $imageFolder = '../../images';
+            if(!is_dir($imageFolder)) {
+                mkdir($imageFolder);
+            }
+
+            // Upload Image
+            move_uploaded_file($image['tmp_name'], $imageFolder . "/file.jpg");
+            exit;
+
             // DB Insert
             $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, created, sellers_id)
             VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
