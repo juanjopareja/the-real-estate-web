@@ -94,7 +94,7 @@
     
             if($result) {
                 // Redirect User
-                header('Location: ../index.php');
+                header('Location: ../index.php?result=1');
             }
         }
 
