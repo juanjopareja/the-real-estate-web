@@ -72,20 +72,23 @@
         }
 
         if(empty($errors)) {
-            // Files Upload
+            /** Files Upload */ 
+
             // Create Folder
             $imageFolder = '../../images';
             if(!is_dir($imageFolder)) {
                 mkdir($imageFolder);
             }
 
+            // Generate Unique Name
+            $imageName = md5( uniqid( rand(), ) ) . ".jpg";
+
             // Upload Image
-            move_uploaded_file($image['tmp_name'], $imageFolder . "/file.jpg");
-            exit;
+            move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
 
             // DB Insert
-            $query = "INSERT INTO properties (title, price, description, bedrooms, wc, parking, created, sellers_id)
-            VALUES ('$title', '$price', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
+            $query = "INSERT INTO properties (title, price, image, description, bedrooms, wc, parking, created, sellers_id)
+            VALUES ('$title', '$price', '$imageName', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
     
             $result = mysqli_query($db, $query);
     
