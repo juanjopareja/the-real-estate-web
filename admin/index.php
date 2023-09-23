@@ -1,5 +1,14 @@
 <?php
+    // DB
+    require '../includes/config/database.php';
+    $db = connectDB();
+    $query = "SELECT * FROM properties";
+    $resultQuery = mysqli_query($db, $query);
+
+    // Show conditional message
     $result = $_GET['result'] ?? null;
+
+    // Template include
     require '../includes/functions.php';
     includeTemplate('header');
 ?>
@@ -23,21 +32,26 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody> <!-- Show results -->
+                <?php while( $property = mysqli_fetch_assoc($resultQuery)) { ?>
                 <tr>
-                    <td>1</td>
-                    <td>Casa en la playa</td>
-                    <td><img src="/images/1111.jpg" class="table-image"></td>
-                    <td>1.200.000 €</td>
+                    <td><?php echo $property['id']; ?></td>
+                    <td><?php echo $property['title']; ?></td>
+                    <td><img src="../images/<?php echo $property['image'];?>" class="table-image" alt="hola"></td>
+                    <td><?php echo $property['price']; ?> €</td>
                     <td>
                         <a href="#" class="red-button-block">Eliminar</a>
                         <a href="#" class="yellow-button-block">Actualizar</a>
                     </td>
                 </tr>
+                <?php } ?>
             </tbody>
         </table>
     </main>
 
 <?php
+    // Close connection
+    mysqli_close($db);
+
     includeTemplate('footer');
 ?>
