@@ -11,6 +11,13 @@
     require '../../includes/config/database.php';
     $db = connectDB();
 
+    // Get property data
+    $query = "SELECT * FROM properties WHERE id = $id";
+    $result = mysqli_query($db, $query);
+    $property = mysqli_fetch_assoc($result);
+
+    var_dump( $property);
+
     // Sellers query
     $query_seller = "SELECT * FROM sellers";
     $result_seller = mysqli_query($db, $query_seller);
@@ -18,13 +25,14 @@
     // Error Messages
     $errors = [];
 
-    $title = '';
-    $price = '';
-    $description = '';
-    $bedrooms = '';
-    $wc = '';
-    $parking = '';
-    $seller_id = '';
+    $title = $property['title'];
+    $price = $property['price'];
+    $description = $property['description'];
+    $bedrooms = $property['bedrooms'];
+    $wc = $property['wc'];
+    $parking = $property['parking'];
+    $seller_id = $property['sellers_id'];
+    $imageProperty = $property['image'];
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = mysqli_real_escape_string($db, $_POST['title']);
@@ -137,6 +145,7 @@
 
                 <label for="image">Imagen:</label>
                 <input type="file" id="image" name="image" accept="image/jpeg, image/png">
+                <img src="../../images/<?php echo $imageProperty; ?>" alt="imagen propiedad" class="small-image">
 
                 <label for="description">Descripción:</label>
                 <textarea id="description" name="description"><?php echo $description; ?></textarea>
