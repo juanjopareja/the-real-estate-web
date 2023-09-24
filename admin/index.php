@@ -41,7 +41,7 @@
                     <td><?php echo $property['price']; ?> €</td>
                     <td>
                         <a href="#" class="red-button-block">Eliminar</a>
-                        <a href="#" class="yellow-button-block">Actualizar</a>
+                        <a href="../admin/properties/update.php?=<?php echo $property['id']; ?>" class="yellow-button-block">Actualizar</a>
                     </td>
                 </tr>
                 <?php } ?>
