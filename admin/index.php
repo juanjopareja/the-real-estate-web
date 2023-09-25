@@ -17,6 +17,8 @@
         <h1>Administrador de The Real Estate</h1>
         <?php if( $result == 1 ) { ?>
             <p class="alert success">Anuncio creado correctamente</p>
+        <?php } elseif( $result == 2 ) { ?>
+            <p class="alert success">Anuncio actualizado correctamente</p>
         <?php } ?>
 
         <a href="../admin/properties/create.php" class="button green-button">Nueva Propiedad</a>

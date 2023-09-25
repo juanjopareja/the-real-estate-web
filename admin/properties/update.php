@@ -16,8 +16,6 @@
     $result = mysqli_query($db, $query);
     $property = mysqli_fetch_assoc($result);
 
-    var_dump( $property);
-
     // Sellers query
     $query_seller = "SELECT * FROM sellers";
     $result_seller = mysqli_query($db, $query_seller);
@@ -76,10 +74,6 @@
             $errors[] = "Elige un vendedor";
         }
 
-        if(!$image['name'] || $image['error']) {
-            $errors[] = "La imagen es obligatoria";
-        }
-
         // Validate image size (1Mb max)
         $size = 1000 * 1000;
 
@@ -102,15 +96,15 @@
             // Upload Image
             move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
 
-            // DB Insert
-            $query = "INSERT INTO properties (title, price, image, description, bedrooms, wc, parking, created, sellers_id)
-            VALUES ('$title', '$price', '$imageName', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
+            // DB Update
+            $query = "UPDATE properties SET title = '$title', price = '$price', description = '$description', 
+            bedrooms = $bedrooms, wc = $wc, parking = $parking, sellers_id = $seller_id WHERE id = $id";
     
             $result = mysqli_query($db, $query);
     
             if($result) {
                 // Redirect User
-                header('Location: ../index.php?result=1');
+                header('Location: ../index.php?result=2');
             }
         }
 
@@ -133,7 +127,7 @@
 
         <?php } ?>
 
-        <form class="form" method="POST" action="../properties/create.php" enctype="multipart/form-data">
+        <form class="form" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información General</legend>
 
