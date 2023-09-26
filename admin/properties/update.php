@@ -90,14 +90,23 @@
                 mkdir($imageFolder);
             }
 
-            // Generate Unique Name
-            $imageName = md5( uniqid( rand(), ) ) . ".jpg";
+            $imageName = '';
 
-            // Upload Image
-            move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
+            if($image['name']) {
+                // Delete previous image
+                unlink($imageFolder . "/" . $property['image']);
+
+                // Generate Unique Name
+                $imageName = md5( uniqid( rand(), ) ) . ".jpg";
+    
+                // Upload Image
+                move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
+            } else {
+                $imageName = $property['image'];
+            }
 
             // DB Update
-            $query = "UPDATE properties SET title = '$title', price = '$price', description = '$description', 
+            $query = "UPDATE properties SET title = '$title', price = '$price', image = '$imageName', description = '$description', 
             bedrooms = $bedrooms, wc = $wc, parking = $parking, sellers_id = $seller_id WHERE id = $id";
     
             $result = mysqli_query($db, $query);
