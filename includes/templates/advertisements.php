@@ -38,7 +38,7 @@
                 </li>
             </ul>
 
-            <a href="advertisement.html" class="yellow-button-block">Ver Propiedad</a>
+            <a href="advertisement.php?id=<?php echo $property['id']; ?>" class="yellow-button-block">Ver Propiedad</a>
         </div><!-- .advertisements-content-->
     </div><!-- .advertisements -->
 
