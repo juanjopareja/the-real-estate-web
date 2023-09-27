@@ -8,6 +8,29 @@
     // Show conditional message
     $result = $_GET['result'] ?? null;
 
+
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if($id) {
+            // Delete file
+            $query = "SELECT image FROM properties WHERE id = $id";
+            $result = mysqli_query($db, $query);
+            $property = mysqli_fetch_assoc($result);
+            unlink('../images/' . $property['image']);
+
+            // Delete property
+            $query = "DELETE FROM properties WHERE id = $id";
+            $result = mysqli_query($db, $query);
+
+            if($result) {
+                header('location: ../admin/index.php?result=3');
+            }
+        }
+    }
+
     // Template include
     require '../includes/functions.php';
     includeTemplate('header');
@@ -19,6 +42,8 @@
             <p class="alert success">Anuncio creado correctamente</p>
         <?php } elseif( $result == 2 ) { ?>
             <p class="alert success">Anuncio actualizado correctamente</p>
+        <?php } elseif( $result == 3 ) { ?>
+            <p class="alert success">Anuncio eliminado correctamente</p>
         <?php } ?>
 
         <a href="../admin/properties/create.php" class="button green-button">Nueva Propiedad</a>
@@ -42,7 +67,12 @@
                     <td><img src="../images/<?php echo $property['image'];?>" class="table-image" alt="hola"></td>
                     <td><?php echo $property['price']; ?> €</td>
                     <td>
-                        <a href="#" class="red-button-block">Eliminar</a>
+                        <form method="POST" class="w-100">
+                            <input type="hidden" name="id" value="<?php echo $property['id']?>">    
+
+                            <input type="submit" class="red-button-block" value="Eliminar">
+                        </form>
+
                         <a href="../admin/properties/update.php?id=<?php echo $property['id']; ?>" class="yellow-button-block">Actualizar</a>
                     </td>
                 </tr>
