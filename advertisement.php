@@ -1,44 +1,63 @@
 <?php
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if(!$id) {
+        header('Location: index.php');
+    }
+
+    // DB connection import
+    require 'includes/config/database.php';
+    $db = connectDB();
+
+    // Query
+    $query = "SELECT * FROM properties WHERE id = $id";
+    
+    // Get results
+    $result = mysqli_query($db, $query);
+
+    if(!$result -> num_rows) {
+        header('Location: index.php');
+    }
+
+    $property = mysqli_fetch_assoc($result);
+
     require 'includes/functions.php';
     includeTemplate('header');
 ?>
 
     <main class="container section center-content">
-        <h1>Casa en Venta frente al bosque</h1>
-
-        <picture>
-            <source srcset="build/img/outstanding.webp" type="image/webp">
-            <source srcset="build/img/outstanding.jpg" type="image/jpeg">
-            <img loading="lazy" src="build/img/outstanding.jpg" alt="imagen destacada">
-        </picture>
+        <h1><?php echo $property['title'] ?></h1>
+       
+        <img loading="lazy" src="images/<?php echo $property['image'] ?>" alt="imagen destacada">
 
         <div class="property-summary">
-            <p class="price">3.000.000 €</p>
+            <p class="price"><?php echo $property['price'] ?> €</p>
 
             <ul class="icons-especifications icons-align">
                 <li>
                     <img class="icon" loading="lazy" src="build/img/icon_wc.svg" alt="icono wc">
-                    <p>3</p>
+                    <p><?php echo $property['wc'] ?></p>
                 </li>
 
                 <li>
                     <img class="icon" loading="lazy" src="build/img/icon_parking.svg" alt="icono parking">
-                    <p>3</p>
+                    <p><?php echo $property['parking'] ?></p>
                 </li>
 
                 <li>
                     <img class="icon" loading="lazy" src="build/img/icon_bedroom.svg" alt="icono dormitorio">
-                    <p>4</p>
+                    <p><?php echo $property['bedrooms'] ?></p>
                 </li>
             </ul>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium accusamus, hic delectus, ex veniam dolorem et distinctio beatae eaque iure consequuntur laudantium quia? Nihil quod ea voluptatibus facilis laudantium.
-            Et beatae veniam ipsum laborum libero. In ab quis cum, rerum impedit sunt voluptates praesentium voluptatem et neque ut ea sapiente deleniti voluptatibus quod ullam facilis quas recusandae. Quidem, expedita.
-            Cumque eius adipisci nulla quisquam eum iure quod blanditiis impedit. Velit aliquam ad enim aut incidunt nisi adipisci qui autem blanditiis beatae a sequi soluta, tempora doloremque iure, aspernatur dignissimos.
-            Quos soluta hic, doloremque voluptas recusandae ea aut ipsam blanditiis! Exercitationem facere quidem nostrum numquam labore soluta laudantium possimus non, voluptatum ipsum temporibus odit neque itaque veniam vero eius quasi!</p>
+            <p><?php echo $property['description'] ?></p>
         </div>
     </main>
 
 <?php
+    // Close connection
+    mysqli_close($db);
+
     includeTemplate('footer');
 ?>
