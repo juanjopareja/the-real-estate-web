@@ -16,6 +16,18 @@
         if(!$password) {
             $error[] = "El password es obligatorio";
         }
+
+        if(empty($error)) {
+            // User already exists
+            $query = "SELECT * FROM users WHERE email = '$email";
+            $result = mysqli_query($db, $query);
+
+            if($result -> num_rows) {
+
+            } else {
+                $error[] = "El usuario no existe";
+            }
+        }
     }
 
     // Header include
