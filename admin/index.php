@@ -1,4 +1,11 @@
 <?php
+    session_start();
+    $auth = $_SESSION['login'];
+
+    if(!$auth) {
+        header('location: ../admin/index.php');
+    }
+
     // DB
     require '../includes/config/database.php';
     $db = connectDB();
@@ -7,8 +14,6 @@
 
     // Show conditional message
     $result = $_GET['result'] ?? null;
-
-
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
