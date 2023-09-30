@@ -19,11 +19,20 @@
 
         if(empty($error)) {
             // User already exists
-            $query = "SELECT * FROM users WHERE email = '$email";
+            $query = "SELECT * FROM users WHERE email = '$email'";
             $result = mysqli_query($db, $query);
 
             if($result -> num_rows) {
+                // Check if password is correct
+                $user = mysqli_fetch_assoc($result);
+                // Verify if password is correct
+                $auth = password_verify($password, $user['password']);
 
+                if($auth) {
+                    // User is authenticated
+                } else {
+                    $error[] = "El password es incorrecto";
+                }
             } else {
                 $error[] = "El usuario no existe";
             }
