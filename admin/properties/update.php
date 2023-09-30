@@ -1,4 +1,11 @@
 <?php
+    require '../../includes/functions.php';
+    $auth = isAuthenticated();
+
+    if(!$auth) {
+        header('location: ../index.php');
+    }
+
     // URL validation per ID
     $id = $_GET['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -119,7 +126,6 @@
 
     }   
 
-    require '../../includes/functions.php';
     includeTemplate('header');
 ?>
 

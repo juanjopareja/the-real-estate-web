@@ -1,9 +1,9 @@
 <?php
-    session_start();
-    $auth = $_SESSION['login'];
+    require '../includes/functions.php';
+    $auth = isAuthenticated();
 
     if(!$auth) {
-        header('location: ../admin/index.php');
+        header('location: ../index.php');
     }
 
     // DB
@@ -37,7 +37,6 @@
     }
 
     // Template include
-    require '../includes/functions.php';
     includeTemplate('header');
 ?>
 
