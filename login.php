@@ -34,6 +34,8 @@
                     $_SESSION['user'] = $user['email'];
                     $_SESSION['login'] = true;
 
+                    header('Location: admin/index.php');
+
                 } else {
                     $error[] = "El password es incorrecto";
                 }
