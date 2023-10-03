@@ -1,0 +1,17 @@
+{
+    "name": "jupg2/the-real-estate-web",
+    "description": "The Real State Website",
+    "type": "project",
+    "authors": [
+        {
+            "name": "juanjopareja",
+            "email": "jupg25@msn.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\" : "./classes"
+        }
+    }
+}
