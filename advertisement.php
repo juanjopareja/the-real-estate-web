@@ -6,8 +6,10 @@
         header('Location: index.php');
     }
 
+    // Import Functions
+    require 'includes/app.php';
+
     // DB connection import
-    require 'includes/config/database.php';
     $db = connectDB();
 
     // Query
@@ -22,7 +24,6 @@
 
     $property = mysqli_fetch_assoc($result);
 
-    require 'includes/functions.php';
     includeTemplate('header');
 ?>
 

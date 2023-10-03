@@ -1,6 +1,5 @@
 <?php 
     // DB connection import
-    require 'includes/config/database.php';
     $db = connectDB();
 
     // Query
