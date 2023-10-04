@@ -6,6 +6,7 @@ class Property {
 
     // DB
     protected static $db;
+    protected static $columnsDB = ['id', 'title', 'price', 'image', 'description', 'bedrooms', 'wc', 'parking', 'created', 'sellers_id'];
     
     public $id;
     public $title;
@@ -17,6 +18,11 @@ class Property {
     public $parking;
     public $created;
     public $sellers_id;
+
+
+    public static function setDB($database) {
+        self::$db = $database;
+    }
 
     public function __construct($args = [])
     {
@@ -30,21 +36,39 @@ class Property {
         $this->parking = $args['parking'] ?? '';
         $this->created = date('Y/m/d');
         $this->sellers_id = $args['sellers_id'] ?? '';
-    }
+    }    
 
     public function save() {
+        // Insert data sanitize
+        $attributes = $this->sanitizeData();
+
         // DB Insert
-        $query = "INSERT INTO properties (title, price, image, description, bedrooms, wc, parking, created, sellers_id)
-        VALUES ('$this->title', '$this->price', '$this->image', '$this->description', '$this->bedrooms', '$this->wc', '$this->parking', '$this->created', '$this->sellers_id')";
-
+        $query = "INSERT INTO properties ( ";
+        $query .= join(', ', array_keys($attributes));
+        $query .= " ) VALUES ('";
+        $query .= join("', '", array_values($attributes));
+        $query .= " ')";
+        
         $result = self::$db->query($query);
-
-        debug($result);
     }
 
-    public static function setDB($database) {
-        self::$db = $database;
+    public function attributes() {
+        $attributes = [];
+        foreach(self::$columnsDB as $column) {
+            if($column === 'id') continue;
+            $attributes[$column] = $this->$column;
+        }
+        return $attributes;
+    }
+
+    public function sanitizeData() {
+        $attributes = $this->attributes();
+        $sanitized = [];
+        
+        foreach($attributes as $key => $value) {
+            $sanitized[$key] = self::$db->escape_string($value);
+        }
+        
+        return $sanitized;
     }
 }
-
-?>
