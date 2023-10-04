@@ -27,6 +27,7 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $property = new Property($_POST);
+        $property->save();
         debug($property);
 
         $title = mysqli_real_escape_string($db, $_POST['title']);
@@ -95,10 +96,6 @@
 
             // Upload Image
             move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
-
-            // DB Insert
-            $query = "INSERT INTO properties (title, price, image, description, bedrooms, wc, parking, created, sellers_id)
-            VALUES ('$title', '$price', '$imageName', '$description', '$bedrooms', '$wc', '$parking', '$created', '$seller_id')";
     
             $result = mysqli_query($db, $query);
     
