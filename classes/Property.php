@@ -25,7 +25,7 @@ class Property {
         $this->bedrooms = $args['bedrooms'] ?? '';
         $this->wc = $args['wc'] ?? '';
         $this->parking = $args['parking'] ?? '';
-        $this->created = $args['created'] ?? '';
+        $this->created = date('d/m/Y');
         $this->sellers_id = $args['sellers_id'] ?? '';
     }
 }

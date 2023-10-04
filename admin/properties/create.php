@@ -25,6 +25,10 @@
     $seller_id = '';
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $property = new Property($_POST);
+        debug($property);
+
         $title = mysqli_real_escape_string($db, $_POST['title']);
         $price = mysqli_real_escape_string($db, $_POST['price']);
         $description = mysqli_real_escape_string($db, $_POST['description']);
@@ -155,7 +159,7 @@
             <fieldset>
                 <legend>Vendedor</legend>
 
-                <select name="seller">
+                <select name="sellers_id">
                     <option value="">-- Selecciona --</option>
                     <?php while($seller = mysqli_fetch_assoc($result_seller)) {?>
                         <option <?php echo $seller_id === $seller['id'] ? 'selected' : ''; ?> value="<?php echo $seller['id']; ?>"> <?php echo $seller['name'] . " " . $seller['lastname']; ?></option>
