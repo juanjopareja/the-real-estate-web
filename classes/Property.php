@@ -32,7 +32,7 @@ class Property {
         $this->id = $args['id'] ?? '';
         $this->title = $args['title'] ?? '';
         $this->price = $args['price'] ?? '';
-        $this->image = $args['image'] ?? 'image.jpg';
+        $this->image = $args['image'] ?? '';
         $this->description = $args['description'] ?? '';
         $this->bedrooms = $args['bedrooms'] ?? '';
         $this->wc = $args['wc'] ?? '';
@@ -53,6 +53,8 @@ class Property {
         $query .= " ')";
         
         $result = self::$db->query($query);
+
+        return $result;
     }
 
     public function attributes() {
@@ -75,6 +77,14 @@ class Property {
         return $sanitized;
     }
 
+    // File updload
+    public function setImage($image) {
+        // Asign image's attribute name's image
+        if($image) {
+            $this->image = $image;
+        }
+    }
+
     // Validation
     public static function getErrors() {
         return self::$errors;
@@ -82,44 +92,37 @@ class Property {
 
     public function validate() {
 
-        if(!$this -> title) {
+        if(!$this->title) {
             self::$errors[] = "Debes añadir un título";
         }
 
-        if(!$this -> price) {
+        if(!$this->price) {
             self::$errors[] = "Debes añadir un precio";
         }
 
-        if(strlen($this -> description) < 50){
+        if(strlen($this->description) < 50){
             self::$errors[] = "La descripción es obligatoria y debe tener al menos 50 caracteres";
         }
 
-        if(!$this -> bedrooms) {
+        if(!$this->bedrooms) {
             self::$errors[] = "El número de habitaciones es obligatorio";
         }
 
-        if(!$this -> wc) {
+        if(!$this->wc) {
             self::$errors[] = "El número de baños es obligatorio";
         }
 
-        if(!$this -> parking) {
+        if(!$this->parking) {
             self::$errors[] = "El número de plazas de garage es obligatorio";
         }
 
-        if(!$this -> sellers_id) {
+        if(!$this->sellers_id) {
             self::$errors[] = "Elige un vendedor";
         }
 
-        // if(!$this -> image['name'] || $this -> image['error']) {
-        //     self::$errors[] = "La imagen es obligatoria";
-        // }
-
-        // // Validate image size (1Mb max)
-        // $size = 1000 * 1000;
-
-        // if($this -> image['size'] > $size) {
-        //     self::$errors[] = "La imagen supera el tamaño máximo de archivo (100kb)";
-        // }
+        if(!$this->image) {
+            self::$errors[] = "La imagen es obligatoria";
+        }
 
         return self::$errors;
     }

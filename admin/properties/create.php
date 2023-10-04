@@ -2,6 +2,7 @@
     require '../../includes/app.php';
 
     use App\Property;
+    use Intervention\Image\ImageManagerStatic as Image;
 
     // User authentication
     isAuthenticated();
@@ -25,34 +26,36 @@
     $seller_id = '';
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+        /** Create new instance **/ 
         $property = new Property($_POST);
 
+        /** Files Upload */ 
+        // Generate Unique Name
+        $imageName = md5( uniqid( rand(), ) ) . ".jpg";
+
+        // Set image
+        // Resize image Intervention
+        if($_FILES['image']['tmp_name']) {
+            $image = Image::make($_FILES['image']['tmp_name'])->fit(800,600);
+            $property->setImage($imageName);
+        }
+
+        // Validation
         $errors = $property->validate();
 
-        if(empty($errors)) {
-
-            $property->save();
-
-            // Asign files to a variable
-            $image = $_FILES['image'];
-
-            /** Files Upload */ 
-
+        if(empty($errors)) { 
             // Create Folder
-            $imageFolder = '../../images';
-            if(!is_dir($imageFolder)) {
-                mkdir($imageFolder);
+            if(!is_dir(IMAGES_FOLDER)) {
+                mkdir(IMAGES_FOLDER);
             }
 
-            // Generate Unique Name
-            $imageName = md5( uniqid( rand(), ) ) . ".jpg";
+            // Save image into server
+            $image->save(IMAGES_FOLDER . $imageName);
 
-            // Upload Image
-            move_uploaded_file($image['tmp_name'], $imageFolder . "/" . $imageName);
-    
-            $result = mysqli_query($db, $query);
-    
+            // Save into DB
+            $result = $property->save();
+            
+            // Error message
             if($result) {
                 // Redirect User
                 header('Location: ../index.php?result=1');
