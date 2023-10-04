@@ -1,13 +1,12 @@
 <?php
-    require '../../includes/functions.php';
-    $auth = isAuthenticated();
+    require '../../includes/app.php';
 
-    if(!$auth) {
-        header('location: ../index.php');
-    }
+    use App\Property;
+
+    // User authentication
+    isAuthenticated();
 
     // DataBase
-    require '../../includes/config/database.php';
     $db = connectDB();
 
     // Sellers query
