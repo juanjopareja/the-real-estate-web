@@ -14,7 +14,7 @@
     $result_seller = mysqli_query($db, $query_seller);
 
     // Error Messages
-    $errors = [];
+    $errors = Property::getErrors();
 
     $title = '';
     $price = '';
@@ -27,62 +27,16 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $property = new Property($_POST);
-        $property->save();
-        debug($property);
 
-        $title = mysqli_real_escape_string($db, $_POST['title']);
-        $price = mysqli_real_escape_string($db, $_POST['price']);
-        $description = mysqli_real_escape_string($db, $_POST['description']);
-        $bedrooms = mysqli_real_escape_string($db, $_POST['bedrooms']);
-        $wc = mysqli_real_escape_string($db, $_POST['wc']);
-        $parking = mysqli_real_escape_string($db, $_POST['parking']);
-        $seller_id = mysqli_real_escape_string($db, $_POST['seller']);
-        $created = date('Y/m/d');
-
-        // Asign files to a variable
-        $image = $_FILES['image'];
-
-
-        if(!$title) {
-            $errors[] = "Debes añadir un título";
-        }
-
-        if(!$price) {
-            $errors[] = "Debes añadir un precio";
-        }
-
-        if(strlen($description) < 50){
-            $errors[] = "La descripción es obligatoria y debe tener al menos 50 caracteres";
-        }
-
-        if(!$bedrooms) {
-            $errors[] = "El número de habitaciones es obligatorio";
-        }
-
-        if(!$wc) {
-            $errors[] = "El número de baños es obligatorio";
-        }
-
-        if(!$parking) {
-            $errors[] = "El número de plazas de garage es obligatorio";
-        }
-
-        if(!$seller_id) {
-            $errors[] = "Elige un vendedor";
-        }
-
-        if(!$image['name'] || $image['error']) {
-            $errors[] = "La imagen es obligatoria";
-        }
-
-        // Validate image size (1Mb max)
-        $size = 1000 * 1000;
-
-        if($image['size'] > $size) {
-            $errors[] = "La imagen supera el tamaño máximo de archivo (100kb)";
-        }
+        $errors = $property->validate();
 
         if(empty($errors)) {
+
+            $property->save();
+
+            // Asign files to a variable
+            $image = $_FILES['image'];
+
             /** Files Upload */ 
 
             // Create Folder
