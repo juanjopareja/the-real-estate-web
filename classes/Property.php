@@ -126,4 +126,43 @@ class Property {
 
         return self::$errors;
     }
+
+    // All property list
+    public static function all() {
+        $query = "SELECT * FROM properties";
+        
+        $result = self::sqlConsult($query);
+
+        return $result;
+    }
+
+    public static function sqlConsult($query) {
+        // DB consult
+        $result = self::$db->query($query);
+
+        // Iterate results
+        $array = [];
+        while($register = $result->fetch_assoc()) {
+            $array[] = self::createObject($register);
+        }
+
+        // Memory liberation
+        $result->free();
+
+        // Results return
+        return $array;
+
+    }
+
+    public static function createObject($register) {
+        $object = new self;
+
+        foreach($register as $key => $value) {
+            if(property_exists($object, $key)) {
+                $object->$key = $value;
+            }
+        }
+
+        return $object;
+    }
 }
