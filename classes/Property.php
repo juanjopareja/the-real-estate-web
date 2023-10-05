@@ -39,9 +39,17 @@ class Property {
         $this->parking = $args['parking'] ?? '';
         $this->created = date('Y/m/d');
         $this->sellers_id = $args['sellers_id'] ?? '';
-    }    
-
+    }
+    
     public function save() {
+        if(isset($this->id)) {
+            $this->update();
+        } else {
+            $this->create();
+        }
+    }
+
+    public function create() {
         // Insert data sanitize
         $attributes = $this->sanitizeData();
 
@@ -55,6 +63,28 @@ class Property {
         $result = self::$db->query($query);
 
         return $result;
+    }
+
+    public function update() {
+        // Insert data sanitize
+        $attributes = $this->sanitizeData();
+
+        $values = [];
+        foreach($attributes as $key => $value) {
+            $values[] = "{$key}='{$value}'";
+        }
+
+        $query = "UPDATE properties SET ";
+        $query .= join(', ', $values );
+        $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+        $query .= " LIMIT 1";
+
+        $result = self::$db->query($query);
+
+        if($result) {
+            // Redirect User
+            header('Location: ../index.php?result=2');
+        }
     }
 
     public function attributes() {
@@ -79,6 +109,14 @@ class Property {
 
     // File updload
     public function setImage($image) {
+        // Delete previous image
+        if(isset($this->id)) {
+            $existFile = file_exists(IMAGES_FOLDER . $this->image);
+            if($existFile) {
+                unlink(IMAGES_FOLDER . $this->image);
+            }
+        }
+
         // Asign image's attribute name's image
         if($image) {
             $this->image = $image;
@@ -136,6 +174,15 @@ class Property {
         return $result;
     }
 
+    // Search register
+    public static function find($id) {
+        $query = "SELECT * FROM properties WHERE id = $id";
+
+        $result = self::sqlConsult($query);
+
+        return array_shift($result);
+    }
+
     public static function sqlConsult($query) {
         // DB consult
         $result = self::$db->query($query);
@@ -164,5 +211,14 @@ class Property {
         }
 
         return $object;
+    }
+
+    // Synchronize
+    public function synchronize($args = []) {
+        foreach($args as $key => $value) {
+            if(property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
+        }
     }
 }

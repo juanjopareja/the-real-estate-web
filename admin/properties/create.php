@@ -20,8 +20,9 @@
     $errors = Property::getErrors();
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
         /** Create new instance **/ 
-        $property = new Property($_POST);
+        $property = new Property($_POST['property']);
 
         /** Files Upload */ 
         // Generate Unique Name
@@ -29,8 +30,8 @@
 
         // Set image
         // Resize image Intervention
-        if($_FILES['image']['tmp_name']) {
-            $image = Image::make($_FILES['image']['tmp_name'])->fit(800,600);
+        if($_FILES['property']['tmp_name']['image']) {
+            $image = Image::make($_FILES['property']['tmp_name']['image'])->fit(800,600);
             $property->setImage($imageName);
         }
 
