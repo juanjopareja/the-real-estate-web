@@ -22,3 +22,8 @@ function debug($var) {
     echo "</pre>";
     exit;
 }
+
+function sanitizer($html) {
+    $s = htmlspecialchars($html);
+    return $s;
+}
