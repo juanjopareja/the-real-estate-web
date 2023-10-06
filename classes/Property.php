@@ -29,7 +29,7 @@ class Property {
 
     public function __construct($args = [])
     {
-        $this->id = $args['id'] ?? '';
+        $this->id = $args['id'] ?? null;
         $this->title = $args['title'] ?? '';
         $this->price = $args['price'] ?? '';
         $this->image = $args['image'] ?? '';
@@ -42,7 +42,7 @@ class Property {
     }
     
     public function save() {
-        if(isset($this->id)) {
+        if(!is_null($this->id)) {
             $this->update();
         } else {
             $this->create();
@@ -62,7 +62,11 @@ class Property {
         
         $result = self::$db->query($query);
 
-        return $result;
+        // Error message
+        if($result) {
+            // Redirect User
+            header('Location: ../index.php?result=1');
+        }
     }
 
     public function update() {
@@ -120,7 +124,7 @@ class Property {
     // File upload
     public function setImage($image) {
         // Delete previous image
-        if(isset($this->id)) {
+        if(!is_null($this->id)) {
             $this->deleteImage();
         }
 

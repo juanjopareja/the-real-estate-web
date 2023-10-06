@@ -48,13 +48,7 @@
             $image->save(IMAGES_FOLDER . $imageName);
 
             // Save into DB
-            $result = $property->save();
-            
-            // Error message
-            if($result) {
-                // Redirect User
-                header('Location: ../index.php?result=1');
-            }
+            $property->save();
         }
 
     }   
