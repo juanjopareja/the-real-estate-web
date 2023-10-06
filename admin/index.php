@@ -15,19 +15,9 @@
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if($id) {
-            // Delete file
-            $query = "SELECT image FROM properties WHERE id = $id";
-            $result = mysqli_query($db, $query);
-            $property = mysqli_fetch_assoc($result);
-            unlink('../images/' . $property['image']);
+            $property = Property::find($id);
 
-            // Delete property
-            $query = "DELETE FROM properties WHERE id = $id";
-            $result = mysqli_query($db, $query);
-
-            if($result) {
-                header('location: ../admin/index.php?result=3');
-            }
+            $property->delete();            
         }
     }
 

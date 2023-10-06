@@ -87,6 +87,16 @@ class Property {
         }
     }
 
+    public function delete() {
+        $query = "DELETE FROM properties WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $result = self::$db->query($query);
+
+        if($result) {
+            $this->deleteImage();
+            header('location: ../admin/index.php?result=3');
+        }
+    }
+
     public function attributes() {
         $attributes = [];
         foreach(self::$columnsDB as $column) {
@@ -107,19 +117,24 @@ class Property {
         return $sanitized;
     }
 
-    // File updload
+    // File upload
     public function setImage($image) {
         // Delete previous image
         if(isset($this->id)) {
-            $existFile = file_exists(IMAGES_FOLDER . $this->image);
-            if($existFile) {
-                unlink(IMAGES_FOLDER . $this->image);
-            }
+            $this->deleteImage();
         }
 
         // Asign image's attribute name's image
         if($image) {
             $this->image = $image;
+        }
+    }
+
+    // File delete
+    public function deleteImage() {
+        $existFile = file_exists(IMAGES_FOLDER . $this->image);
+        if($existFile) {
+            unlink(IMAGES_FOLDER . $this->image);
         }
     }
 
