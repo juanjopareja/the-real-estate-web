@@ -12,6 +12,9 @@ class ActiveRecord {
     // Errors
     protected static $errors = [];
 
+    // Properties
+    public $id;
+    public $image;
 
     public static function setDB($database) {
         self::$db = $database;
@@ -79,7 +82,7 @@ class ActiveRecord {
 
     public function attributes() {
         $attributes = [];
-        foreach(self::$columnsDB as $column) {
+        foreach(static::$columnsDB as $column) {
             if($column === 'id') continue;
             $attributes[$column] = $this->$column;
         }
@@ -153,7 +156,7 @@ class ActiveRecord {
         // Iterate results
         $array = [];
         while($register = $result->fetch_assoc()) {
-            $array[] = self::createObject($register);
+            $array[] = static::createObject($register);
         }
 
         // Memory liberation
