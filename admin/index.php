@@ -39,6 +39,8 @@
 
         <a href="../admin/properties/create.php" class="button green-button">Nueva Propiedad</a>
 
+        <h2>Propiedades</h2>
+
         <table class="properties">
             <thead>
                 <tr>
@@ -70,11 +72,40 @@
                 <?php } ?>
             </tbody>
         </table>
+
+        <h2>Vendedores</h2>
+
+        <table class="properties">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Télefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody> <!-- Show results -->
+                <?php foreach($seller as $sel) { ?>
+                <tr>
+                    <td><?php echo $sel->id; ?></td>
+                    <td><?php echo $sel->name . " " . $sel->lastname; ?></td>
+                    <td><?php echo $sel->phone; ?></td>
+                    <td>
+                        <form method="POST" class="w-100">
+                            <input type="hidden" name="id" value="<?php echo $property->id?>">    
+
+                            <input type="submit" class="red-button-block" value="Eliminar">
+                        </form>
+
+                        <a href="../admin/properties/update.php?id=<?php echo $property->id; ?>" class="yellow-button-block">Actualizar</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
     </main>
 
 <?php
-    // Close connection
-    mysqli_close($db);
-
     includeTemplate('footer');
 ?>
