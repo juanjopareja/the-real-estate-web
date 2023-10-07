@@ -34,12 +34,13 @@
 <fieldset>
     <legend>Vendedor</legend>
 
-    <select name="property[sellers_id]">
-        <option value="">-- Selecciona --</option>
-        <option value="1"></option>
-        <?php while($seller = mysqli_fetch_assoc($result_seller)) {?>
-            <option <?php echo $seller_id === $seller['id'] ? 'selected' : ''; ?> value="<?php echo sanitizer($property->seller); ?>"> <?php echo $seller['name'] . " " . $seller['lastname']; ?></option>
+    <label for="seller">Vendedor</label>
+    <select name="property[sellers_id]" id="seller">
+        <option selectedv value="">-- Selecciona --</option>
+        <?php foreach($sellers as $seller) { ?>
+            <option 
+                <?php echo $property->sellers_id === $seller->id ? 'selected' : ''; ?>
+                value="<?php echo sanitizer($seller->id); ?>"> <?php echo sanitizer($seller->name) . " " . sanitizer($seller->lastname); ?> </option>
         <?php } ?>
-        
     </select>
 </fieldset>
