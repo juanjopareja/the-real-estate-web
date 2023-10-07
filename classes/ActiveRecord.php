@@ -120,44 +120,12 @@ class ActiveRecord {
 
     // Validation
     public static function getErrors() {
-        return self::$errors;
+        return static::$errors;
     }
-
+    
     public function validate() {
-
-        if(!$this->title) {
-            self::$errors[] = "Debes añadir un título";
-        }
-
-        if(!$this->price) {
-            self::$errors[] = "Debes añadir un precio";
-        }
-
-        if(strlen($this->description) < 50){
-            self::$errors[] = "La descripción es obligatoria y debe tener al menos 50 caracteres";
-        }
-
-        if(!$this->bedrooms) {
-            self::$errors[] = "El número de habitaciones es obligatorio";
-        }
-
-        if(!$this->wc) {
-            self::$errors[] = "El número de baños es obligatorio";
-        }
-
-        if(!$this->parking) {
-            self::$errors[] = "El número de plazas de garage es obligatorio";
-        }
-
-        if(!$this->sellers_id) {
-            self::$errors[] = "Elige un vendedor";
-        }
-
-        if(!$this->image) {
-            self::$errors[] = "La imagen es obligatoria";
-        }
-
-        return self::$errors;
+        static::$errors = [];
+        return static::$errors;
     }
 
     // All register list
