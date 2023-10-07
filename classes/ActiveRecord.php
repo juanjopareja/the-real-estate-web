@@ -3,42 +3,18 @@
 namespace App;
 
 class ActiveRecord {
-    
+
     // DB
     protected static $db;
-    protected static $columnsDB = ['id', 'title', 'price', 'image', 'description', 'bedrooms', 'wc', 'parking', 'created', 'sellers_id'];
+    protected static $columnsDB = [];
+    protected static $table = '';
     
     // Errors
     protected static $errors = [];
 
-    public $id;
-    public $title;
-    public $price;
-    public $image;
-    public $description;
-    public $bedrooms;
-    public $wc;
-    public $parking;
-    public $created;
-    public $sellers_id;
-
 
     public static function setDB($database) {
         self::$db = $database;
-    }
-
-    public function __construct($args = [])
-    {
-        $this->id = $args['id'] ?? null;
-        $this->title = $args['title'] ?? '';
-        $this->price = $args['price'] ?? '';
-        $this->image = $args['image'] ?? '';
-        $this->description = $args['description'] ?? '';
-        $this->bedrooms = $args['bedrooms'] ?? '';
-        $this->wc = $args['wc'] ?? '';
-        $this->parking = $args['parking'] ?? '';
-        $this->created = date('Y/m/d');
-        $this->sellers_id = $args['sellers_id'] ?? '';
     }
     
     public function save() {
@@ -54,7 +30,7 @@ class ActiveRecord {
         $attributes = $this->sanitizeData();
 
         // DB Insert
-        $query = "INSERT INTO properties ( ";
+        $query = "INSERT INTO " . static::$table . " ( ";
         $query .= join(', ', array_keys($attributes));
         $query .= " ) VALUES ('";
         $query .= join("', '", array_values($attributes));
@@ -78,7 +54,7 @@ class ActiveRecord {
             $values[] = "{$key}='{$value}'";
         }
 
-        $query = "UPDATE properties SET ";
+        $query = "UPDATE " . static::$table . " SET ";
         $query .= join(', ', $values );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1";
@@ -92,7 +68,7 @@ class ActiveRecord {
     }
 
     public function delete() {
-        $query = "DELETE FROM properties WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $query = "DELETE FROM " . static::$table . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $result = self::$db->query($query);
 
         if($result) {
@@ -184,9 +160,9 @@ class ActiveRecord {
         return self::$errors;
     }
 
-    // All property list
+    // All register list
     public static function all() {
-        $query = "SELECT * FROM properties";
+        $query = "SELECT * FROM " . static::$table;
         
         $result = self::sqlConsult($query);
 
@@ -195,7 +171,7 @@ class ActiveRecord {
 
     // Search register
     public static function find($id) {
-        $query = "SELECT * FROM properties WHERE id = $id";
+        $query = "SELECT * FROM " . static::$table . " WHERE id = $id";
 
         $result = self::sqlConsult($query);
 
@@ -221,7 +197,7 @@ class ActiveRecord {
     }
 
     public static function createObject($register) {
-        $object = new self;
+        $object = new static;
 
         foreach($register as $key => $value) {
             if(property_exists($object, $key)) {

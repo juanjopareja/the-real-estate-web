@@ -3,9 +3,11 @@
     isAuthenticated();
 
     use App\Property;
+    use App\Seller;
 
     // Get properties implement
     $properties = Property::all();
+    $seller = Seller::all();
 
     // Show conditional message
     $result = $_GET['result'] ?? null;
