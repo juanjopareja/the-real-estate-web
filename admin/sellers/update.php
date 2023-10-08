@@ -2,16 +2,36 @@
 
     require '../../includes/app.php';
     use App\Seller;
-
     isAuthenticated();
 
-    $seller = new Seller;
+    // Validate id
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if(!$id) {
+        header('Location: ../../admin');
+    }
+
+    // Get seller array
+    $seller = Seller::find($id);
 
     // Error Messages
     $errors = Seller::getErrors();
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
+        // Assing values
+        $args = $_POST['seller'];
+
+        // Sinchronize memory object
+        $seller->synchronize($args);
+
+        // Validation
+        $errors = $seller->validate();
+
+        if(empty($errors)) {
+            $seller->save();
+        }
     }
 
     includeTemplate('header');
