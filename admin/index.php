@@ -17,9 +17,19 @@
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if($id) {
-            $property = Property::find($id);
 
-            $property->delete();            
+            $type = $_POST['type'];
+
+            if(validateTypeContent($type)) {
+                if($type === 'seller') {
+                    $seller = Seller::find($id);
+                    $seller->delete(); 
+
+                } else if($type === 'property') {
+                    $property = Property::find($id);
+                    $property->delete(); 
+                }
+            }            
         }
     }
 
@@ -62,6 +72,7 @@
                     <td>
                         <form method="POST" class="w-100">
                             <input type="hidden" name="id" value="<?php echo $property->id?>">    
+                            <input type="hidden" name="type" value="property">    
 
                             <input type="submit" class="red-button-block" value="Eliminar">
                         </form>
@@ -93,7 +104,8 @@
                     <td><?php echo $sel->phone; ?></td>
                     <td>
                         <form method="POST" class="w-100">
-                            <input type="hidden" name="id" value="<?php echo $property->id?>">    
+                            <input type="hidden" name="id" value="<?php echo $sel->id?>">    
+                            <input type="hidden" name="type" value="seller">
 
                             <input type="submit" class="red-button-block" value="Eliminar">
                         </form>
