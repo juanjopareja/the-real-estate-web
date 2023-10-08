@@ -20,4 +20,25 @@ class Seller extends ActiveRecord {
         $this->lastname = $args['lastname'] ?? '';
         $this->phone = $args['phone'] ?? '';
     }
+
+    public function validate() {
+
+        if(!$this->name) {
+            self::$errors[] = "El nombre es obligatorio";
+        }
+
+        if(!$this->lastname) {
+            self::$errors[] = "El apellido es obligatorio";
+        }
+
+        if(!$this->phone) {
+            self::$errors[] = "El teléfono es obligatorio";
+        }
+
+        if(!preg_match('/[0-9]{10}/', $this->phone)) {
+            self::$errors[] = "Formato no válido";
+        }
+
+        return self::$errors;
+    }
 }

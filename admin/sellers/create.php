@@ -11,7 +11,17 @@
     $errors = Seller::getErrors();
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+        
+        // Create new instance
+        $seller = new Seller($_POST['seller']);
+
+        // Validate empty fields
+        $errors = $seller->validate();
+
+        // No errors
+        if(empty($errors)) {
+            $seller->save();
+        }
     }
 
     includeTemplate('header');
