@@ -39,14 +39,13 @@
 
     <main class="container section">
         <h1>Administrador de The Real Estate</h1>
-        <?php if( $result == 1 ) { ?>
-            <p class="alert success">Creado correctamente</p>
-        <?php } elseif( $result == 2 ) { ?>
-            <p class="alert success">Actualizado correctamente</p>
-        <?php } elseif( $result == 3 ) { ?>
-            <p class="alert success">Eliminado correctamente</p>
-        <?php } ?>
 
+        <?php
+            $message = showMessages(intval($result));
+            if($message) { ?>
+            <p class="alert success"><?php echo sanitizer($message) ?></p>
+        <?php } ?>
+            
         <a href="../admin/properties/create.php" class="button green-button">Nueva Propiedad</a>
         <a href="../admin/sellers/create.php" class="button yellow-button">Nuevo/a Vendedor/a</a>
 
@@ -111,7 +110,7 @@
                             <input type="submit" class="red-button-block" value="Eliminar">
                         </form>
 
-                        <a href="../admin/sellers/update.php?id=<?php echo $property->id; ?>" class="yellow-button-block">Actualizar</a>
+                        <a href="../admin/sellers/update.php?id=<?php echo $sel->id; ?>" class="yellow-button-block">Actualizar</a>
                     </td>
                 </tr>
                 <?php } ?>

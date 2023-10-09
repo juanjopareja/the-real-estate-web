@@ -2,7 +2,7 @@
     <legend>Información General</legend>
     
     <label for="name">Nombre:</label>
-    <input type="text" id="name" name="seller[name]" placeholder="Nombre Vendedor/a" value="<?php echo sanitizer($seller->name); ?>">
+    <input type="text" id="name" name="sellers[name]" placeholder="Nombre Vendedor/a" value="<?php echo sanitizer($seller->name); ?>">
 
     <label for="name">Apellido:</label>
     <input type="text" id="lastname" name="seller[lastname]" placeholder="Apellido Vendedor/a" value="<?php echo sanitizer($seller->lastname); ?>">

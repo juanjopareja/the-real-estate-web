@@ -33,3 +33,24 @@ function validateTypeContent($type) {
 
     return in_array($type, $types);
 }
+
+function showMessages($code) {
+    $message = '';
+
+    switch($code) {
+        case 1:
+            $message = 'Creado correctamente';
+            break;
+        case 2:
+            $message = 'Actualizado correctamente';
+            break;
+        case 3:
+            $message = 'Eliminado correctamente';
+            break;
+        default:
+            $message = false;
+            break;
+    }
+
+    return $message;
+}
