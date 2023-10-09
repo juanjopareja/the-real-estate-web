@@ -140,6 +140,15 @@ class ActiveRecord {
         return $result;
     }
 
+    // Get certain register number
+    public static function get($quantity) {
+        $query = "SELECT * FROM " . static::$table . " LIMIT " . $quantity;
+        
+        $result = self::sqlConsult($query);
+
+        return $result;
+    }
+
     // Search register
     public static function find($id) {
         $query = "SELECT * FROM " . static::$table . " WHERE id = $id";

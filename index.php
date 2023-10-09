@@ -30,8 +30,7 @@
     <section class="section container">
         <h2>Casas y Apartamentos en Venta</h2>
 
-        <?php
-            $limit = 3; 
+        <?php 
             include 'includes/templates/advertisements.php';
         ?>
 
